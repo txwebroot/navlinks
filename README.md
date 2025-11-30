@@ -1,161 +1,114 @@
 # NavLink 导航站系统
 
-> 一个现代化、可定制的网址导航站，支持后台管理和多前台应用架构。
+> 一个现代化、可定制的私有网址导航站，支持后台管理、多应用架构和 Chrome 扩展集成。
+
+![Version](https://img.shields.io/badge/version-1.1.0-green.svg)
+
+## ✨ 主要特性
+
+- **现代化 UI 设计**：基于 React 19 + Tailwind CSS 构建，响应式设计，完美适配 PC 和移动端。
+- **可视化后台管理**：所见即所得的配置管理，支持拖拽排序、图标上传、分类管理。
+- **多应用架构**：
+  - **Navlink**：主导航应用，支持分类、搜索、热门推荐。
+  - **Sub**：订阅管理子应用，追踪服务订阅状态和续费提醒。
+- **数据持久化**：
+  - 采用 **SQLite** 数据库存储，轻量且高效。
+  - 支持配置数据的导入/导出和备份/恢复。
+- **高级功能**：
+  - **链接健康检查**：自动检测失效链接。
+  - **Chrome 扩展支持**：一键保存当前网页到导航站。
+  - **文件管理**：内置图标和图片上传管理。
+- **安全可靠**：JWT 身份认证，支持 Docker 一键部署。
 
 ## 🚀 快速开始
 
-### 开发环境
+### 方式一：Docker 部署（推荐）
 
-```bash
-# 安装依赖
-npm install
-
-# 启动开发服务器
-npm run dev
-
-# 访问 http://localhost:3000
-```
-
-### 生产构建
-
-```bash
-# 构建项目
-npm run build
-
-# 预览构建结果
-npm run preview
-```
-
-### Docker部署
+只需一个命令即可启动完整服务：
 
 ```bash
 # 构建并启动容器
-docker-compose up -d --build
+docker-compose up -d
 
-# 查看日志
-docker-compose logs -f
+# 访问应用
+# 前台: http://localhost:8088
+# 后台: 点击右上角用户图标登录后再次点击即可打开管理面板
+```
 
-# 停止容器
-docker-compose down
+### 方式二：本地开发
+
+需要 Node.js 20+ 环境。
+
+```bash
+# 1. 安装依赖
+npm install
+
+# 2. 启动开发服务器 (同时启动前端和后端)
+npm run dev:all
+
+# 访问 http://localhost:3000 (前端) 和 http://localhost:3001 (后端API)
 ```
 
 ## 📁 项目结构
 
 ```
 NavLink/
-├── src/
-│   ├── shared/              # 共享层（所有应用共用）
-│   │   ├── components/      # 通用组件
-│   │   ├── utils/           # 工具函数
-│   │   ├── types/           # 类型定义
-│   │   └── context/         # React Context
-│   └── apps/                # 应用层
-│       └── navlink/         # 导航站应用
-├── server.js                # Node.js后端服务
-├── data/                    # 数据存储目录
-│   ├── config.json         # 网站配置
-│   └── uploads/            # 上传文件
-├── docs/                    # 项目文档
-│   ├── README.md           # 详细文档
-│   ├── DEPLOY_GUIDE.md     # 部署指南
-│   └── REFACTOR_SUMMARY.md # 重构总结
-└── chrome-extension/        # Chrome扩展（可选）
+├── src/                 # 前端源码 (React)
+│   ├── apps/            # 多应用目录
+│   │   ├── navlink/     # 主导航应用
+│   │   └── sub/         # 订阅管理应用
+│   └── shared/          # 共享组件和工具
+├── server/              # 后端源码 (Node.js/Express)
+│   ├── database/        # 数据库层 (SQLite DAO)
+│   ├── routes/          # API 路由
+│   └── services/        # 业务逻辑服务
+├── data/                # 数据存储 (Docker 挂载点)
+│   ├── navlink.db       # SQLite 数据库文件
+│   └── uploads/         # 上传的图片资源
+├── chrome-extension/    # Chrome 伴侣插件源码
+├── docker-compose.yml   # Docker 编排文件
+└── README.md            # 项目文档
 ```
 
-## 📖 文档
-
-- [完整项目文档](./docs/README.md) - 详细的功能说明和API文档
-- [架构说明](./src/README.md) - 项目架构和代码组织
-- [部署指南](./docs/DEPLOY_GUIDE.md) - 生产环境部署步骤
-- [重构总结](./docs/REFACTOR_SUMMARY.md) - 多应用架构重构说明
-
-## 🎯 主要功能
-
-- ✅ **可视化编辑** - 所见即所得的后台管理界面
-- ✅ **完全可定制** - 主题、布局、内容全部可配置
-- ✅ **响应式设计** - 完美适配PC、平板、手机
-- ✅ **搜索功能** - 快捷键搜索、聚合搜索引擎
-- ✅ **链接健康检查** - 自动检测失效链接
-- ✅ **媒体管理** - 文件上传和资源管理
-- ✅ **多应用架构** - 支持新增多个前台应用
-- ✅ **Docker部署** - 一键容器化部署
-
-## 🔧 技术栈
-
-### 前端
-- **框架**: React 19 + TypeScript 5.8
-- **构建**: Vite 6
-- **样式**: Tailwind CSS 3
-- **图标**: Font Awesome 6
-
-### 后端
-- **运行时**: Node.js 20
-- **框架**: Express.js
-- **认证**: JWT
-- **文件上传**: Multer
-
-### 部署
-- **容器化**: Docker + Docker Compose
-- **反向代理**: Nginx（可选）
-
-## ⚙️ 配置
+## ⚙️ 配置说明
 
 ### 环境变量
 
-```bash
-# .env（可选）
-PORT=3001                    # 后端端口
-JWT_SECRET=your_secret_key   # JWT密钥
-ADMIN_PASSWORD=admin         # 管理员密码
-```
+可以在 `docker-compose.yml` 或 `.env` 文件中配置：
 
-### Docker环境变量
+| 变量名 | 默认值 | 说明 |
+|Data | Value | Description|
+|---|---|---|
+| `PORT` | `80` | 服务运行端口 (容器内) |
+| `JWT_SECRET` | `...` | JWT 签名密钥，生产环境请修改 |
+| `ADMIN_PASSWORD` | `admin` | 后台管理员初始密码 |
+| `DB_PATH` | `./data/navlink.db` | SQLite 数据库路径 |
 
-在 `docker-compose.yml` 中配置：
-```yaml
-environment:
-  - PORT=80
-  - JWT_SECRET=navlink_production_secret_key
-  - ADMIN_PASSWORD=admin
-```
+### 数据备份
 
-## 🔐 默认密码
+所有重要数据都存储在 `data/` 目录下：
+- **数据库**: `data/navlink.db`
+- **上传文件**: `data/uploads/`
 
-- **后台管理密码**: `admin`（首次使用请修改）
+建议定期备份整个 `data` 目录。
 
-## 🌟 新增前台应用
+## 🧩 Chrome 扩展
 
-项目采用多应用架构，可轻松新增前台页面：
+本项目包含一个 Chrome 扩展，位于 `chrome-extension/` 目录。
 
-```bash
-# 1. 创建应用目录
-mkdir -p src/apps/your-app
+**安装步骤：**
+1. 打开 Chrome 浏览器，访问 `chrome://extensions/`
+2. 开启右上角的 "开发者模式"
+3. 点击 "加载已解压的扩展程序"
+4. 选择项目中的 `chrome-extension` 文件夹
+5. 在扩展设置中填写你的 NavLink 服务器地址 (如 `http://localhost:8088`) 和登录密码
 
-# 2. 参考 src/apps/navlink 创建应用
-# 3. 复用 src/shared 中的所有组件和工具
-```
+## � 技术栈
 
-详见 [架构文档](./src/README.md)
-
-## 📊 项目信息
-
-- **版本**: 1.0.0
-- **作者**: txwen
-- **许可**: MIT
-- **最后更新**: 2024-11-27
+- **前端**: React 19, TypeScript, Vite, Tailwind CSS, FontAwesome
+- **后端**: Node.js, Express, SQLite3, Multer, JWT
+- **运维**: Docker, Docker Compose
 
 ## 🤝 贡献
 
-欢迎提交Issue和Pull Request！
-
-## 📝 更新日志
-
-### v1.0.0 (2024-11-27)
-- ✅ 重构为多应用架构
-- ✅ 实现Token自动验证和过期退出
-- ✅ 优化项目结构和文档
-
----
-
-**开始使用**: `npm install && npm run dev`  
-**快速部署**: `docker-compose up -d`
+欢迎提交 Issue 和 Pull Request！
