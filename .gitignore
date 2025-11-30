@@ -1,0 +1,48 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Production
+dist
+build
+
+# Misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local Data
+data/*.json
+!data/db.json.example
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Uploaded images
+data/uploads/*
+!data/uploads/.gitkeep
+
+# Reference and documentation folders (not for production)
+SubsTracker-master/
+docs/

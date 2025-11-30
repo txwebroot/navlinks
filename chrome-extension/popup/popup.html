@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NavLink Helper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <div class="header">
+      <h2>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+        NavLink Helper
+      </h2>
+      <button id="settingsBtn" class="icon-btn" title="设置">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 1v6m0 6v6m0-18l-4 4m4-4l4 4M12 23l-4-4m4 4l4-4M1 12h6m6 0h6M1 12l4-4m-4 4l4 4m18-4l-4-4m4 4l-4 4"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 快速添加区域 -->
+    <div id="quickAddSection" class="section">
+      <h3>快速添加当前页面</h3>
+      <div class="preview-card">
+        <img id="previewIcon" src="" alt="图标" class="preview-icon">
+        <div class="preview-info">
+          <div id="previewTitle" class="preview-title">加载中...</div>
+          <div id="previewUrl" class="preview-url">...</div>
+        </div>
+      </div>
+
+      <button id="quickAddBtn" class="btn btn-primary">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        添加到 NavLink
+      </button>
+    </div>
+
+    <!-- 最近添加 -->
+    <div id="recentSection" class="section">
+      <h3>最近添加</h3>
+      <div id="recentList" class="recent-list">
+        <div class="empty-state">暂无记录</div>
+      </div>
+    </div>
+
+    <!-- 未登录状态 -->
+    <div id="notLoggedIn" class="section" style="display: none;">
+      <div class="empty-state">
+        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4m-5-4l-3-3 3-3m3 3H3"></path>
+        </svg>
+        <p>请先登录 NavLink</p>
+        <button id="gotoSettingsBtn" class="btn btn-secondary">前往设置</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../utils/api.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

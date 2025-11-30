@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  navlink-web:
+    build: .
+    container_name: navlink-container
+    ports:
+      - "8088:80"
+    volumes:
+      # 数据持久化（包括 uploads、数据库、JSON 等所有数据）
+      - ./data:/app/data
+    environment:
+      - PORT=80
+      - NODE_ENV=production
+      - JWT_SECRET=navlink_production_secret_key_2024_change_me
+      - ADMIN_PASSWORD=admin
+    restart: always
+    # 健康检查（推荐）
+    healthcheck:
+      test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/api/subscriptions" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

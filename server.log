@@ -1,0 +1,24 @@
+[通知服务] nodemailer未安装，邮件通知功能将不可用
+[Startup] Initializing database...
+[定时任务] 开始初始化所有定时任务...
+Health check scheduled for 03:00 daily.
+[Database] SQLite initialized at: /Users/txwen/Downloads/Navlink/data/navlink.db
+[订阅检查] 定时任务已设置: 每小时检查一次
+[自定义提醒] 定时任务已设置: 每5分钟检查一次
+[提醒清理] 定时任务已设置: 每天凌晨3:00清理一次
+[定时任务] 所有定时任务初始化完成
+Server is running on port 3001
+[Auth] 收到认证请求: {
+  path: '/config',
+  hasAuthHeader: true,
+  tokenPreview: 'eyJhbGciOiJIUzI1NiIs...'
+}
+[Auth] 认证成功: { role: 'admin', iat: 1764464129, exp: 1764550529 }
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据

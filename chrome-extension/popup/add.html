@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加到 NavLink</title>
+  <link rel="stylesheet" href="add.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>添加到 NavLink</h2>
+    </div>
+
+    <form id="addForm">
+      <!-- 链接预览 -->
+      <div class="form-section">
+        <div class="preview-card">
+          <img id="iconPreview" src="" alt="图标" class="icon-preview">
+          <div class="preview-info">
+            <div id="titlePreview" class="title-preview"></div>
+            <div id="urlPreview" class="url-preview"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 标题 -->
+      <div class="form-section">
+        <label for="title" class="form-label">链接标题 *</label>
+        <input 
+          type="text" 
+          id="title" 
+          class="form-input" 
+          placeholder="请输入链接标题"
+          required
+        >
+      </div>
+
+      <!-- URL -->
+      <div class="form-section">
+        <label for="url" class="form-label">链接地址 *</label>
+        <input 
+          type="url" 
+          id="url" 
+          class="form-input" 
+          placeholder="https://example.com"
+          required
+          readonly
+        >
+      </div>
+
+      <!-- 描述 -->
+      <div class="form-section">
+        <label for="description" class="form-label">描述（可选）</label>
+        <textarea 
+          id="description" 
+          class="form-textarea" 
+          placeholder="简短描述这个链接"
+          rows="2"
+        ></textarea>
+      </div>
+
+      <!-- 分类选择 -->
+      <div class="form-section">
+        <label for="category" class="form-label">选择分类 *</label>
+        <select id="category" class="form-select" required>
+          <option value="">加载中...</option>
+        </select>
+      </div>
+
+      <!-- 子分类选择 -->
+      <div class="form-section" id="subCategorySection" style="display: none;">
+        <label for="subCategory" class="form-label">选择子分类</label>
+        <select id="subCategory" class="form-select">
+          <option value="">选择子分类（可选）</option>
+        </select>
+      </div>
+
+      <!-- 图标模式选择 -->
+      <div class="form-section">
+        <label class="form-label">图标模式</label>
+        <div style="display: flex; gap: 16px; margin-top: 8px;">
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="radio" name="iconMode" value="local" checked style="margin-right: 6px;">
+            <span style="font-size: 13px;">📦 本地图标（下载到服务器）</span>
+          </label>
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="radio" name="iconMode" value="online" style="margin-right: 6px;">
+            <span style="font-size: 13px;">🌐 在线图标（URL/图标库）</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 图标 URL -->
+      <div class="form-section">
+        <label for="icon" class="form-label">图标地址（可选）</label>
+        <div class="icon-input-group">
+          <input 
+            type="text" 
+            id="icon" 
+            class="form-input" 
+            placeholder="自动获取 或 输入图标代码（如：fa-solid fa-home）"
+          >
+          <button type="button" id="refreshIconBtn" class="icon-btn" title="刷新图标">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+            </svg>
+          </button>
+        </div>
+        <p style="font-size: 11px; color: #666; margin-top: 6px;">
+          💡 本地模式：自动下载图标到服务器 | 在线模式：支持 URL、FontAwesome、Iconify
+        </p>
+      </div>
+
+      <!-- 按钮组 -->
+      <div class="button-group">
+        <button type="button" id="cancelBtn" class="btn btn-secondary">取消</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary">添加</button>
+      </div>
+    </form>
+
+    <!-- 加载状态 -->
+    <div id="loading" class="loading-overlay" style="display: none;">
+      <div class="spinner"></div>
+      <p>添加中...</p>
+    </div>
+  </div>
+
+  <script src="../utils/api.js"></script>
+  <script src="add.js"></script>
+</body>
+</html>

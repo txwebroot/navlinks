@@ -1,0 +1,14 @@
+{
+    "site": {
+        "title": "Navlink Test",
+        "subtitle": "Testing Import",
+        "logoUrl": "/logo.png",
+        "headerQuote": "Test Quote"
+    },
+    "categories": [],
+    "hero": {
+        "title": "Hero Title",
+        "subtitle": "Hero Subtitle",
+        "hotSearchLinks": []
+    }
+}
