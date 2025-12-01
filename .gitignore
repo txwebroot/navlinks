@@ -46,3 +46,8 @@ data/uploads/*
 # Reference and documentation folders (not for production)
 SubsTracker-master/
 docs/
+
+# Debug and planning files
+debug_root.log
+docker_implementation_report.md
+docker应用需求计划

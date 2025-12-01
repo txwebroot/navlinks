@@ -26,3 +26,160 @@ Server is running on port 3001
 [自定义提醒] 没有活跃的提醒数据
 [自定义提醒] 开始检查...
 [自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[Login] 登录尝试, JWT_SECRET: your-secret-key-chan...
+[Login] 登录成功, Token: eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+[Auth] 收到认证请求: {
+  path: '/config',
+  hasAuthHeader: true,
+  tokenPreview: 'eyJhbGciOiJIUzI1NiIs...'
+}
+[Auth] 认证成功: { role: 'admin', iat: 1764474373, exp: 1764560773 }
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[订阅检查] 开始检查订阅到期情况...
+[订阅检查] 强制模式：忽略通知间隔和次数限制
+[自定义提醒] 开始检查...
+[订阅检查] 订阅 "ssjav.top" 需要提醒，剩余天数: 7
+[订阅检查] 准备发送 1 个订阅的通知
+[自定义提醒] 没有活跃的提醒数据
+[Telegram] 发送成功 (订阅到期提醒): {
+  ok: true,
+  result: {
+    message_id: 28,
+    from: {
+      id: 8589901773,
+      is_bot: true,
+      first_name: '订阅过期通知',
+      username: 'subweb_bot'
+    },
+    chat: {
+      id: 5506591322,
+      first_name: 'webxx',
+      username: 'tgwebroot',
+      type: 'private'
+    },
+    date: 1764475201,
+    text: '订阅到期提醒\n' +
+      '\n' +
+      '📢 订阅到期提醒\n' +
+      '\n' +
+      '1. 🟡 ssjav.top\n' +
+      '   类型: namesilo\n' +
+      '   到期: 2025-12-07 (还有7天到期)\n' +
+      '   价格: ¥4.88/1年\n' +
+      '\n' +
+      '发送时间: 2025/11/30 12:00:00\n' +
+      '时区: Asia/Shanghai',
+    entities: [ [Object], [Object] ]
+  }
+}
+[Bark] 发送成功 (订阅到期提醒): { code: 200, message: 'success', timestamp: 1764475201 }
+[订阅检查] 通知发送结果: [
+  { platform: 'bark', success: true, message: 'success' },
+  { platform: 'telegram', success: true, message: 'Message sent' }
+]
+[订阅检查] 通知已发送并记录
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[Auth] 收到认证请求: {
+  path: '/config',
+  hasAuthHeader: true,
+  tokenPreview: 'eyJhbGciOiJIUzI1NiIs...'
+}
+[Auth] 认证成功: { role: 'admin', iat: 1764424783, exp: 1764511183 }
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[订阅检查] 开始检查订阅到期情况...
+[订阅检查] 强制模式：忽略通知间隔和次数限制
+[订阅检查] 订阅 "ssjav.top" 需要提醒，剩余天数: 7
+[订阅检查] 准备发送 1 个订阅的通知
+[Bark] 发送成功 (订阅到期提醒): { code: 200, message: 'success', timestamp: 1764478801 }
+[Telegram] 发送成功 (订阅到期提醒): {
+  ok: true,
+  result: {
+    message_id: 31,
+    from: {
+      id: 8589901773,
+      is_bot: true,
+      first_name: '订阅过期通知',
+      username: 'subweb_bot'
+    },
+    chat: {
+      id: 5506591322,
+      first_name: 'webxx',
+      username: 'tgwebroot',
+      type: 'private'
+    },
+    date: 1764478801,
+    text: '订阅到期提醒\n' +
+      '\n' +
+      '📢 订阅到期提醒\n' +
+      '\n' +
+      '1. 🟡 ssjav.top\n' +
+      '   类型: namesilo\n' +
+      '   到期: 2025-12-07 (还有7天到期)\n' +
+      '   价格: ¥4.88/1年\n' +
+      '\n' +
+      '发送时间: 2025/11/30 13:00:00\n' +
+      '时区: Asia/Shanghai',
+    entities: [ [Object], [Object] ]
+  }
+}
+[订阅检查] 通知发送结果: [
+  { platform: 'bark', success: true, message: 'success' },
+  { platform: 'telegram', success: true, message: 'Message sent' }
+]
+[订阅检查] 通知已发送并记录
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[自定义提醒] 开始检查...
+[自定义提醒] 没有活跃的提醒数据
+[Auth] 收到认证请求: {
+  path: '/config',
+  hasAuthHeader: true,
+  tokenPreview: 'eyJhbGciOiJIUzI1NiIs...'
+}
+[Auth] 认证成功: { role: 'admin', iat: 1764424783, exp: 1764511183 }
+[Database] Connection closed

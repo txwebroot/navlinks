@@ -118,3 +118,72 @@ AFTER UPDATE ON app_management
 BEGIN
     UPDATE app_management SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
 END;
+
+-- ==========================================
+-- 6. Docker Servers (Docker服务器配置)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS docker_servers (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT DEFAULT '',
+    
+    -- 连接配置
+    connection_type TEXT NOT NULL DEFAULT 'local' CHECK(connection_type IN ('local', 'tcp', 'tls', 'ssh')),
+    host TEXT,
+    port INTEGER DEFAULT 2375,
+    
+    -- TLS证书（预留，Base64编码存储）
+    ca_cert TEXT,
+    client_cert TEXT,
+    client_key TEXT,
+    
+    -- SSH配置
+    ssh_user TEXT,
+    ssh_password TEXT,
+    ssh_port INTEGER DEFAULT 22,
+    
+    -- 状态信息
+    status TEXT DEFAULT 'unknown' CHECK(status IN ('online', 'offline', 'unknown', 'error')),
+    last_check_time DATETIME,
+    last_error TEXT,
+    latency INTEGER DEFAULT 0,  -- 延迟（毫秒）
+    
+    -- 元数据
+    is_default INTEGER DEFAULT 0,
+    tags TEXT DEFAULT '',  -- 逗号分隔的标签
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_docker_servers_status ON docker_servers(status);
+CREATE INDEX IF NOT EXISTS idx_docker_servers_default ON docker_servers(is_default);
+
+-- ==========================================
+-- 7. Docker Audit Logs (操作审计日志)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS docker_audit_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    server_id TEXT,
+    action TEXT NOT NULL,  -- 'connect', 'start_container', 'stop_container', 'delete_image' 等
+    resource_type TEXT,    -- 'container', 'image', 'volume', 'network'
+    resource_id TEXT,
+    resource_name TEXT,
+    status TEXT DEFAULT 'success' CHECK(status IN ('success', 'failed')),
+    error_message TEXT,
+    user_info TEXT,  -- 可选：记录操作用户
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(server_id) REFERENCES docker_servers(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_docker_audit_server ON docker_audit_logs(server_id);
+CREATE INDEX IF NOT EXISTS idx_docker_audit_action ON docker_audit_logs(action);
+CREATE INDEX IF NOT EXISTS idx_docker_audit_created ON docker_audit_logs(created_at);
+
+-- ==========================================
+-- 触发器：自动更新 docker_servers updated_at
+-- ==========================================
+CREATE TRIGGER IF NOT EXISTS update_docker_servers_timestamp 
+AFTER UPDATE ON docker_servers
+BEGIN
+    UPDATE docker_servers SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
+END;

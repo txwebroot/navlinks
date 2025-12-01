@@ -9,6 +9,8 @@ services:
     volumes:
       # 数据持久化（包括 uploads、数据库、JSON 等所有数据）
       - ./data:/app/data
+      # 挂载 Docker Socket（用于Docker应用）
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - PORT=80
       - NODE_ENV=production

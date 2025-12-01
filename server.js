@@ -16,6 +16,7 @@ import reminderRoutes from './server/routes/reminders.js';
 import uploadRoutes from './server/routes/upload.js';
 import authRoutes from './server/routes/auth.js';
 import appManagementRoutes from './server/routes/appManagement.js';
+import dockerRoutes from './server/routes/docker.js';
 
 // Import middleware
 import { checkAppEnabled } from './server/middleware/appControl.js';
@@ -88,6 +89,7 @@ app.use('/api', navlinkRoutes);
 app.use('/api/app-management', appManagementRoutes);
 app.use('/api/subscriptions', checkAppEnabled('sub'), subscriptionRoutes);
 app.use('/api/custom-reminders', checkAppEnabled('sub'), reminderRoutes);
+app.use('/api/docker', checkAppEnabled('docker'), dockerRoutes);
 app.use('/api', uploadRoutes);
 
 // 托管上传文件目录

@@ -25,6 +25,13 @@ const AVAILABLE_APPS: AppInfo[] = [
         description: '管理您的订阅服务，跟踪到期时间和费用',
         icon: 'fa-solid fa-credit-card',
         canDisable: true
+    },
+    {
+        name: 'docker',
+        label: 'Docker管理',
+        description: '管理Docker服务器、容器、镜像和网络资源',
+        icon: 'fa-brands fa-docker',
+        canDisable: true
     }
 ];
 

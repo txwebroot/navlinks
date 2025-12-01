@@ -6,6 +6,7 @@ export interface ConfirmDialogState {
     title: string;
     message: string;
     onConfirm: () => void;
+    variant?: 'danger' | 'primary';
 }
 
 // Alert Dialog State
@@ -31,8 +32,8 @@ export const useDialogs = () => {
     const [alertDialog, setAlertDialog] = useState<AlertDialogState | null>(null);
     const [promptDialog, setPromptDialogState] = useState<PromptDialogState | null>(null);
 
-    const showConfirm = (title: string, message: string, onConfirm: () => void) => {
-        setConfirmDialog({ isOpen: true, title, message, onConfirm });
+    const showConfirm = (title: string, message: string, onConfirm: () => void, variant: ConfirmDialogState['variant'] = 'danger') => {
+        setConfirmDialog({ isOpen: true, title, message, onConfirm, variant });
     };
 
     const hideConfirm = () => {

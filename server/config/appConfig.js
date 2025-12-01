@@ -11,6 +11,7 @@ const APP_CONFIG_FILE = path.join(DATA_DIR, 'app_config.json');
 const DEFAULT_APP_CONFIG = {
     enabledApps: {
         sub: true,
+        docker: true,
         blog: false,
         todo: false
     }

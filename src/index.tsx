@@ -14,6 +14,7 @@ import '@/src/index.css';
 // 懒加载应用
 const NavlinkApp = React.lazy(() => import('./apps/navlink/App'));
 const SubApp = React.lazy(() => import('./apps/sub/App'));
+const DockerApp = React.lazy(() => import('./apps/docker/App'));
 
 // 登录对话框组件
 const LoginDialog = React.lazy(() => import('./shared/components/common/LoginDialog'));
@@ -21,6 +22,7 @@ const LoginDialog = React.lazy(() => import('./shared/components/common/LoginDia
 // 应用配置：哪些应用需要登录
 const APP_AUTH_CONFIG: Record<string, boolean> = {
   sub: true,    // Sub 应用需要登录
+  docker: true, // Docker 应用需要登录
   blog: false,  // Blog 应用不需要登录（未来使用）
   todo: false   // Todo 应用不需要登录（未来使用）
 };
@@ -33,15 +35,21 @@ function AppRoutes() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 检查 Sub 应用是否需要登录
+  // 检查 Sub 和 Docker 应用是否需要登录
   useEffect(() => {
     // 等待配置加载完成
     if (appConfigLoading || !configLoaded) return;
-    
+
     // 如果在 sub 页面且未登录，弹出登录框并跳转首页
     if (location.pathname === '/sub' && APP_AUTH_CONFIG.sub && !isAuthenticated) {
       setShowLogin(true);
-      navigate('/', { replace: true });
+      navigate('/', { replace: true, state: { from: '/sub' } });
+    }
+
+    // 如果在 docker 页面且未登录，弹出登录框并跳转首页
+    if (location.pathname === '/docker' && APP_AUTH_CONFIG.docker && !isAuthenticated) {
+      setShowLogin(true);
+      navigate('/', { replace: true, state: { from: '/docker' } });
     }
   }, [location.pathname, isAuthenticated, appConfigLoading, configLoaded]);
 
@@ -63,15 +71,31 @@ function AppRoutes() {
     if (!isAppEnabled('sub')) {
       return <AppDisabled appName="订阅管理" />;
     }
-    
+
     // 2. 检查是否需要登录（登录框已经在 useEffect 中处理）
     if (APP_AUTH_CONFIG.sub && !isAuthenticated) {
       // 返回 null，让登录框处理
       return null;
     }
-    
+
     // 3. 允许访问
     return <SubApp />;
+  };
+
+  // Docker 应用的访问控制
+  const getDockerAppElement = () => {
+    // 1. 检查应用是否启用
+    if (!isAppEnabled('docker')) {
+      return <AppDisabled appName="Docker管理" />;
+    }
+
+    // 2. 检查是否需要登录
+    if (APP_AUTH_CONFIG.docker && !isAuthenticated) {
+      return null;
+    }
+
+    // 3. 允许访问
+    return <DockerApp />;
   };
 
   const handleLoginClose = () => {
@@ -81,8 +105,18 @@ function AppRoutes() {
 
   const handleLoginSuccess = () => {
     setShowLogin(false);
-    // 登录成功后跳转到 sub 页面
-    navigate('/sub');
+    // 登录成功后，如果是从docker页面来的，跳转回docker
+    if (location.pathname === '/') {
+      // Check if we have a redirect target
+      const from = (location.state as any)?.from;
+      if (from) {
+        navigate(from);
+      } else {
+        // 从首页登录，默认跳转到 sub 页面
+        navigate('/sub');
+      }
+    }
+    // 否则保持当前路径（会自动显示应用）
   };
 
   return (
@@ -90,14 +124,15 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<NavlinkApp />} />
         <Route path="/sub" element={getSubAppElement()} />
+        <Route path="/docker" element={getDockerAppElement()} />
       </Routes>
-      
+
       {/* 登录对话框 */}
       {showLogin && (
         <React.Suspense fallback={null}>
-          <LoginDialog 
-            onClose={handleLoginClose} 
-            onLogin={handleLoginSuccess} 
+          <LoginDialog
+            onClose={handleLoginClose}
+            onLogin={handleLoginSuccess}
           />
         </React.Suspense>
       )}
