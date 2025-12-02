@@ -188,3 +188,99 @@ AFTER UPDATE ON docker_servers
 BEGIN
     UPDATE docker_servers SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
 END;
+
+-- ==========================================
+-- 8. VPS Groups (VPS分组)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS vps_groups (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT DEFAULT '',
+    sort_order INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================================
+-- 9. VPS Servers (VPS服务器)
+-- ==========================================
+CREATE TABLE IF NOT EXISTS vps_servers (
+    id TEXT PRIMARY KEY,
+    group_id TEXT,
+    name TEXT NOT NULL,
+    description TEXT DEFAULT '',
+    
+    -- 连接信息
+    host TEXT NOT NULL,
+    port INTEGER DEFAULT 22,
+    username TEXT NOT NULL,
+    password TEXT,          -- 加密存储
+    private_key TEXT,       -- 加密存储
+    auth_type TEXT DEFAULT 'password' CHECK(auth_type IN ('password', 'key')),
+    
+    -- 状态信息
+    status TEXT DEFAULT 'unknown' CHECK(status IN ('online', 'offline', 'unknown', 'error')),
+    last_check_time DATETIME,
+    latency INTEGER DEFAULT 0,
+    
+    -- 系统信息 (缓存)
+    os_info TEXT,
+    cpu_info TEXT,
+    mem_info TEXT,
+    disk_info TEXT,
+    
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY(group_id) REFERENCES vps_groups(id) ON DELETE SET NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_vps_servers_group ON vps_servers(group_id);
+CREATE INDEX IF NOT EXISTS idx_vps_servers_status ON vps_servers(status);
+
+-- ==========================================
+-- 触发器：自动更新 VPS 相关表 updated_at
+-- ==========================================
+CREATE TRIGGER IF NOT EXISTS update_vps_groups_timestamp 
+AFTER UPDATE ON vps_groups
+BEGIN
+    UPDATE vps_groups SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
+END;
+
+CREATE TRIGGER IF NOT EXISTS update_vps_servers_timestamp 
+AFTER UPDATE ON vps_servers
+BEGIN
+    UPDATE vps_servers SET updated_at = CURRENT_TIMESTAMP WHERE id = OLD.id;
+END;
+
+-- VPS Snippets Table
+CREATE TABLE IF NOT EXISTS vps_snippets (
+    id TEXT PRIMARY KEY,
+    category TEXT NOT NULL,
+    title TEXT NOT NULL,
+    command TEXT NOT NULL,
+    description TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TRIGGER IF NOT EXISTS update_vps_snippets_timestamp 
+AFTER UPDATE ON vps_snippets
+BEGIN
+    UPDATE vps_snippets SET updated_at = CURRENT_TIMESTAMP WHERE id = OLD.id;
+END;
+
+-- VPS Snippet Categories Table
+CREATE TABLE IF NOT EXISTS vps_snippet_categories (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    sort_order INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TRIGGER IF NOT EXISTS update_vps_snippet_categories_timestamp 
+AFTER UPDATE ON vps_snippet_categories
+BEGIN
+    UPDATE vps_snippet_categories SET updated_at = CURRENT_TIMESTAMP WHERE id = OLD.id;
+END;

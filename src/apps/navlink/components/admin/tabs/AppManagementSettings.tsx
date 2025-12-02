@@ -32,6 +32,13 @@ const AVAILABLE_APPS: AppInfo[] = [
         description: '管理Docker服务器、容器、镜像和网络资源',
         icon: 'fa-brands fa-docker',
         canDisable: true
+    },
+    {
+        name: 'vps',
+        label: 'VPS管理',
+        description: '管理远程VPS服务器，支持SSH终端、文件管理和资源监控',
+        icon: 'fa-solid fa-server',
+        canDisable: true
     }
 ];
 

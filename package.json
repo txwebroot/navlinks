@@ -13,6 +13,9 @@
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
     "@iconify/react": "^6.0.2",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-web-links": "^0.11.0",
+    "@xterm/xterm": "^5.5.0",
     "axios": "^1.13.2",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -24,6 +27,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.6",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "sqlite3": "^5.1.7",
     "ssh2": "^1.17.0",
     "swr": "^2.3.6",

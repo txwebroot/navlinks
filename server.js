@@ -17,6 +17,7 @@ import uploadRoutes from './server/routes/upload.js';
 import authRoutes from './server/routes/auth.js';
 import appManagementRoutes from './server/routes/appManagement.js';
 import dockerRoutes from './server/routes/docker.js';
+import vpsRoutes from './server/routes/vps.js';
 
 // Import middleware
 import { checkAppEnabled } from './server/middleware/appControl.js';
@@ -90,6 +91,7 @@ app.use('/api/app-management', appManagementRoutes);
 app.use('/api/subscriptions', checkAppEnabled('sub'), subscriptionRoutes);
 app.use('/api/custom-reminders', checkAppEnabled('sub'), reminderRoutes);
 app.use('/api/docker', checkAppEnabled('docker'), dockerRoutes);
+app.use('/api/vps', checkAppEnabled('vps'), vpsRoutes);
 app.use('/api', uploadRoutes);
 
 // 托管上传文件目录
@@ -115,6 +117,11 @@ app.get('*', (req, res, next) => {
     });
 });
 
+import { createServer } from 'http';
+import { initSocket } from './server/services/socketService.js';
+
+// ... (imports)
+
 // 初始化目录并启动服务器
 (async () => {
     await ensureDataDir();
@@ -127,7 +134,12 @@ app.get('*', (req, res, next) => {
     // 初始化所有定时任务
     await initializeScheduledTasks();
 
-    app.listen(PORT, () => {
+    const httpServer = createServer(app);
+
+    // 初始化 Socket.io
+    initSocket(httpServer);
+
+    httpServer.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });
 })();

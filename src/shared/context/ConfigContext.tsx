@@ -31,10 +31,10 @@ export const ConfigProvider: React.FC<{ children: ReactNode }> = ({ children }) 
                 // Verify token by making a test request
                 try {
                     console.log('[ConfigContext] 检测到token，验证有效性...');
-                    const response = await fetch('/api/config', {
+                    const response = await fetch('/api/verify', {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
-                    
+
                     if (response.ok) {
                         console.log('[ConfigContext] Token有效，保持登录状态');
                         setIsAuthenticated(true);

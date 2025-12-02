@@ -12,6 +12,7 @@ const DEFAULT_APP_CONFIG = {
     enabledApps: {
         sub: true,
         docker: true,
+        vps: true,
         blog: false,
         todo: false
     }

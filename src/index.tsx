@@ -15,6 +15,7 @@ import '@/src/index.css';
 const NavlinkApp = React.lazy(() => import('./apps/navlink/App'));
 const SubApp = React.lazy(() => import('./apps/sub/App'));
 const DockerApp = React.lazy(() => import('./apps/docker/App'));
+const VpsApp = React.lazy(() => import('./apps/vps/App'));
 
 // 登录对话框组件
 const LoginDialog = React.lazy(() => import('./shared/components/common/LoginDialog'));
@@ -23,6 +24,7 @@ const LoginDialog = React.lazy(() => import('./shared/components/common/LoginDia
 const APP_AUTH_CONFIG: Record<string, boolean> = {
   sub: true,    // Sub 应用需要登录
   docker: true, // Docker 应用需要登录
+  vps: true,    // VPS 应用需要登录
   blog: false,  // Blog 应用不需要登录（未来使用）
   todo: false   // Todo 应用不需要登录（未来使用）
 };
@@ -35,7 +37,7 @@ function AppRoutes() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 检查 Sub 和 Docker 应用是否需要登录
+  // 检查 Sub, Docker 和 VPS 应用是否需要登录
   useEffect(() => {
     // 等待配置加载完成
     if (appConfigLoading || !configLoaded) return;
@@ -50,6 +52,12 @@ function AppRoutes() {
     if (location.pathname === '/docker' && APP_AUTH_CONFIG.docker && !isAuthenticated) {
       setShowLogin(true);
       navigate('/', { replace: true, state: { from: '/docker' } });
+    }
+
+    // 如果在 vps 页面且未登录，弹出登录框并跳转首页
+    if (location.pathname === '/vps' && APP_AUTH_CONFIG.vps && !isAuthenticated) {
+      setShowLogin(true);
+      navigate('/', { replace: true, state: { from: '/vps' } });
     }
   }, [location.pathname, isAuthenticated, appConfigLoading, configLoaded]);
 
@@ -98,6 +106,22 @@ function AppRoutes() {
     return <DockerApp />;
   };
 
+  // VPS 应用的访问控制
+  const getVpsAppElement = () => {
+    // 1. 检查应用是否启用 (暂不检查 isAppEnabled('vps')，默认启用，或者需要更新 useAppConfig)
+    // if (!isAppEnabled('vps')) {
+    //   return <AppDisabled appName="VPS主机管理" />;
+    // }
+
+    // 2. 检查是否需要登录
+    if (APP_AUTH_CONFIG.vps && !isAuthenticated) {
+      return null;
+    }
+
+    // 3. 允许访问
+    return <VpsApp />;
+  };
+
   const handleLoginClose = () => {
     setShowLogin(false);
     // 取消登录，保持在首页
@@ -125,6 +149,7 @@ function AppRoutes() {
         <Route path="/" element={<NavlinkApp />} />
         <Route path="/sub" element={getSubAppElement()} />
         <Route path="/docker" element={getDockerAppElement()} />
+        <Route path="/vps" element={getVpsAppElement()} />
       </Routes>
 
       {/* 登录对话框 */}
