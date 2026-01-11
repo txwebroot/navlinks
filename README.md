@@ -185,11 +185,11 @@ data/
 
 ### 应用切换
 
-点击顶部导航栏的应用图标即可切换：
+(在后台启用)然后将子应用添加到顶部导航栏或链接中：
 - 🏠 NavLink - 导航站
-- 📋 Sub - 订阅管理
-- 🐳 Docker - 容器管理
-
+- 📋 Sub - 订阅管理    /apps/sub
+- 🐳 Docker - 容器管理  /apps/dodcker
+- vps - 服务器管理   /apps/vps
 ---
 
 ## 🧩 Chrome 扩展
